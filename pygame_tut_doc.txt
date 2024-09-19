@@ -1,0 +1,137 @@
+DECIDING FPS OF GAME
+
+lets assume we're moving the main character of our
+game 10px to the right on every single frame
+
+if we're doing this with 1 frame per sec we're moving him by
+10px every second
+
+now if we are doing this with 100 frames per sec we're moving him
+1000px per sec. So there is a massive difference in speed
+
+This needs to be addressed if we want out game to run smoothly on every platform
+we dont want our game to run too fast or too slow
+
+SURFACES IN PYGAME_
+
+1-Display surface: The game window . Anything displayed goes on here
+                  -Must be unique and always visible
+                  
+2-regular surface: To display anthing on the display surface.Essentially a single image, something imported
+                    , rendered text or plain color
+                   - we can have regula surfaces as many as we want
+
+CARTESIAN SYSTEM OF PYGAME SURFACES
+
+The origin (0,0) lies in top-left corner of the rectangular srfc
+so changing the position of the srfc will happen with respect to that point
+
+if u want to go right - <inc X>
+if u want to go down - <inc y> unlike the  mathematics concept where for downward direction we used to decrease y
+
+SURFACES-
+
+SURFACE WITH COLOR
+test_srfc = pygame.Surface((100, 200))
+test_srfc.fill("RED")
+
+screen.blit(test_srfc,(0,0))
+
+SURFACE WITH IMAGE
+test_srfc - pygame.image.load("<image source>")
+screen.blit(test_srfc,(0,0))
+
+SRFC WITH TEXT
+-process Creating text-
+-> create an image of the text
+-> place it on the display surface
+
+steps:
+1.create a font(text size and style)
+2.write text on a surfcae
+3.blit the text surface
+
+BASIC ANIMATION
+ to do the basic animation all we have to do this is increase or change the coordinates in screen.blit method
+
+USING .convert() method so that pygame can work with easily and our game can run much smoother
+ but we must specify the alpha values otherwise our graphics and .png images are gonna look much more weird
+ specifically the snail.png as it is the moving image
+    for that purpose we use snail1.convert_alpha()
+
+RECTANGLES
+- Important functions
+1- RECTANGLES help to position surfaces much more efficientlyand precisely.
+2- help in detecting collisions
+
+COLLISION WITH RECTANGLES
+
+rect1.collidepoint((x,y)) method is useful if u want to check collision of a point
+with a rectangle.This method is useful when u want to make a mouse clicking game
+
+gettio mouse position:
+    -pyagme.mouse
+    -event loop
+
+STATE MANAGEMENT PYGAME
+- we want to draw a game over menu where if the game ends it shows score and player can restart the game
+
+here is the logic:
+    if game_active:
+        current game(i.e Draw all the graphics and menus , enemies)
+    else:
+        game_over(Draw the game over menu)
+
+
+
+
+TIMERS
+
+we can tell pygame t run a certain kinfd of code in certain time intervals.
+
+all we are going to do is create a user event that's triggered by pygame
+
+so far all the user events were something the player is doing but 
+a user event can also be triggered by pygame
+
+There are three steps to achieve this
+1-we have to create a custom user event
+2-we have to tell pygame to trigger this user event at a certain interval
+3- add code in the event loop to do something when this evnet is triggered
+
+
+
+NEW OBSTACLE LOGIC
+
+1.first of all We have to create a list that is going to contain all the rectangles of the obstacles 
+
+2.Everytime the time triggers we add a new rectangle to the list.
+
+3.we move every rectangle in the list to the left on every frame.
+
+4.we delete rectangles too far left.
+
+That way we can contnuously create new enemies and move them to left
+
+
+
+ADDING DIFFRENT OBSTACLE
+
+-we want to spawn either a snail or a fly
+
+FIXING COLLISION BETWEEN OBSTACLES
+
+- we are going to check the player and the obstacle rect list
+  and if the player is colliding with any of the rectangles inside of the obstacle rect list then we want to end our game 
+
+ANIMATE THE PLAYER FLY AND SNAIL
+animation: place a slightly different looking image in rapid succession
+
+- so all we are going to do is to update the surface we are putting on the screen every few milliseconds
+- all we have to figure out is how to update the surface in every few milliseconds
+
+    PLAYER ANIMATION:
+    - we create our own timer that updates the surface on every singkle cycle of the game loop
+        and if the number becomes too large we are going to change the image we are going to place on the screen
+    OBSTACLE ANIMATION:
+    - we rely on the inbuild timer to update all the surfaces
